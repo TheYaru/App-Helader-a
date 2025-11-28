@@ -1,50 +1,156 @@
-# Welcome to your Expo app 👋
+📘 K’Delight – README Oficial
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bienvenido al proyecto K’Delight, una aplicación móvil creada con React Native (Expo + Expo Router) y un backend hecho con FastAPI + SQLModel.
+Este documento explica cómo instalar, configurar y ejecutar tanto el frontend como el backend, paso a paso.
 
-## Get started
+⚙️ 1. Requisitos previos
 
-1. Install dependencies
+Asegúrate de tener instalado:
 
-   ```bash
-   npm install
-   ```
+🖥 Backend
 
-2. Start the app
+Python 3.10+
 
-   ```bash
-   npx expo start
-   ```
+pip
 
-In the output, you'll find options to open the app in a
+Virtualenv (opcional pero recomendado)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+📱 Frontend
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Node.js 18+
 
-## Get a fresh project
+npm o pnpm
 
-When you're ready, run:
+Expo CLI
 
-```bash
-npm run reset-project
-```
+EAS CLI (si quieres generar APK)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+📁 2. Estructura del proyecto
+KDELIGHT/
+ ├── server/                 # Backend FastAPI
+ │   ├── app/
+ │   │    ├── main.py
+ │   │    ├── crud.py
+ │   │    ├── models.py
+ │   │    ├── database.py
+ │   │    ├── static/
+ │   └── venv/ (opcional)
+ │
+ └── kdelight/               # Frontend Expo
+      ├── app/
+      ├── components/
+      ├── constants/
+      ├── assets/
+      ├── package.json
+      └── app.json
 
-## Learn more
+🚀 3. Cómo correr el Backend (FastAPI)
+📌 1. Entrar a la carpeta del backend
+cd server
 
-To learn more about developing your project with Expo, look at the following resources:
+📌 2. Crear entorno virtual
+python -m venv venv
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+📌 3. Activarlo
 
-## Join the community
+Windows:
 
-Join our community of developers creating universal apps.
+venv\Scripts\activate
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+Mac/Linux:
+
+source venv/bin/activate
+
+📌 4. Instalar dependencias
+pip install -r requirements.txt
+
+
+(si no tienes el archivo, entonces instalar manualmente:)
+
+pip install fastapi uvicorn sqlmodel pydantic[dotenv] python-multipart
+
+📌 5. Correr el servidor
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+🔥 El backend estará disponible en:
+http://TU-IP-LOCAL:8000
+
+📱 4. Cómo correr el Frontend (Expo + React Native)
+📌 1. Entrar a la carpeta
+cd kdelight
+
+📌 2. Instalar dependencias
+npm install
+
+
+(O si usas pnpm:)
+
+pnpm install
+
+📌 3. Iniciar Expo
+npm run start
+
+
+Esto abrirá Expo DevTools en tu navegador.
+
+📌 4. Ejecutar en un dispositivo físico
+
+Instalar Expo Go desde Play Store
+
+Escanear el QR que aparece en la terminal o en la web
+
+🏗 5. Generar un APK
+
+Asegúrate de haber iniciado sesión:
+
+eas login
+
+📌 1. Configurar EAS
+eas build:configure
+
+📌 2. Crear APK
+eas build --platform android --profile preview
+
+
+Al finalizar, EAS te dará un link para descargar tu APK.
+
+🔧 6. Configuración importante
+📌 En constants/api.js
+
+Debes colocar tu IP local:
+
+export const API_BASE = "http://TU-IP-LOCAL:8000";
+
+
+Ejemplo:
+
+export const API_BASE = "http://192.168.0.64:8000";
+
+📌 Recuerda:
+
+✔ El backend debe estar corriendo
+✔ Tu celular debe estar en la misma red WiFi que tu PC
+✔ No uses localhost — Expo NO puede verlo
+
+🧪 7. Endpoints principales (Backend)
+Productos
+GET    /products
+GET    /products/{id}
+POST   /products
+
+Órdenes
+POST   /orders
+GET    /orders
+
+Autenticación
+POST   /register
+POST   /login
+
+📝 8. Scripts útiles
+Frontend
+npm run start     # levantar Expo
+npm run android   # abrir en emulador Android
+
+Backend
+uvicorn app.main:app --reload
